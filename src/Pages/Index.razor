@@ -1,0 +1,16 @@
+﻿@page "/"
+
+<p>Hola, @name</p>
+
+@code {
+    string name = "Freddy";
+
+    public MovieViewModel getMovie() 
+    {
+        return new MovieViewModel 
+        {
+            Title = "Batman: el caballero de la noche",
+            ReleaseDate = new DateTime(2008, 7, 14)
+        };
+    }
+}

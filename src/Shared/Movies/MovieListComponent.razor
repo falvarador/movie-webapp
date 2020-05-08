@@ -1,0 +1,21 @@
+@if (Movies is null) 
+{
+    <text>Cargando...</text>
+}
+else if (Movies.Count() == 0) 
+{
+    <text>No existen registros que mostrar.</text>
+}
+else 
+{
+    @foreach (var movie in Movies)
+    {
+        <MovieComponent Movie="movie" />
+    }
+}
+
+@code {
+
+    [Parameter]
+    public List<MovieViewModel> Movies { get; set; }
+}

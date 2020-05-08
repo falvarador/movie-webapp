@@ -1,0 +1,13 @@
+@page "/genrer/create"
+
+<h3>New genrer</h3>
+
+@code {
+    private GenderViewModel Genrer = new GenderViewModel();
+
+    private void Create()
+    {
+        Console.WriteLine("Create a new genrer");
+        Console.WriteLine($"Genrer name: {Genrer.Name}");
+    }
+}

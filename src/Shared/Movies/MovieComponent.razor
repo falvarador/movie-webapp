@@ -1,0 +1,18 @@
+<div>
+    <p>Title: <b>@Movie.Title</b></p>
+    <p>Release date: <b>@Movie.ReleaseDate</b></p>
+    <div>
+        <button @onclick="DeleteMovie"></button>
+    </div>
+</div>
+
+@code {
+
+    [Parameter] 
+    public MovieViewModel Movie { get; set; }
+
+    void DeleteMovie() 
+    {
+        Console.WriteLine($"Eliminando la película: {Movie.Title}");
+    }
+}
