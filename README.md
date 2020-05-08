@@ -1,6 +1,6 @@
 # Description
 
-Web api microservice application for movie web project.
+Web app application for movie web project.
 
 ## Instalation
 
@@ -9,7 +9,7 @@ N/A.
 ## Namespace
 
 ```cs
-using MovieWeb.WebApi;
+using MovieWeb.WebApp;
 ```
 
 ## Contributors
