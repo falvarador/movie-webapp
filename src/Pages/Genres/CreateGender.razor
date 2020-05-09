@@ -1,13 +1,28 @@
-@page "/genrer/create"
+@page "/gender/create"
 
-<h3>New genrer</h3>
+@inject IBaseService baseService
+@inject IShowMessage showMessage
+@inject NavigationManager navigationManager
+
+<h3>New gender</h3>
+
+<GenderForm OnValidSubmit="Create" Gender="Gender" />
 
 @code {
-    private GenderViewModel Genrer = new GenderViewModel();
+    private GenderViewModel Gender = new GenderViewModel();
 
-    private void Create()
+    private async Task Create()
     {
-        Console.WriteLine("Create a new genrer");
-        Console.WriteLine($"Genrer name: {Genrer.Name}");
+        var httpResponse = await baseService.PostAsync("http://localhost:5000/api/v1/genders", Gender);
+
+        if (httpResponse.Error)
+        {
+            var body = await httpResponse.GetBody();
+            await showMessage.ShowErrorMessage(body);
+        }
+        else
+        {
+            navigationManager.NavigateTo("gender");
+        }
     }
 }

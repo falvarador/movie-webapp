@@ -1,8 +1,54 @@
 @page  "/person/update/{PersonId:int}"
 
+@inject IBaseService baseService
+@inject IShowMessage showMessage
+@inject NavigationManager navigationManager
+
 <h3>Update person</h3>
+@if (Person == null)
+{
+    <text>Cargando...</text>
+}
+else
+{
+    <PersonForm Person="Person" OnValidSubmit="EditPerson" />
+}
 
 @code {
-    [Parameter] 
-    public int PersonId { get; set; }
+    [Parameter] public int PersonId { get; set; }
+    PersonViewModel Person;
+
+    protected async override Task OnInitializedAsync()
+    {
+        var httpResponse = await baseService.GetAsync<PersonViewModel>($"http://localhost:5000/api/v1/people/{PersonId}");
+
+        if (httpResponse.Error)
+        {
+            if (httpResponse.HttpResponseMessage.StatusCode == System.Net.HttpStatusCode.NotFound)
+            {
+                navigationManager.NavigateTo("person");
+            }
+            else
+            {
+                await showMessage.ShowErrorMessage(await httpResponse.GetBody());
+            }
+        }
+        else
+        {
+            Person = httpResponse.Response;
+        }
+    }
+
+    private async Task EditPerson()
+    {
+        var httpResponse = await baseService.PutAsync("http://localhost:5000/api/v1/people/", Person);
+        if (httpResponse.Error)
+        {
+            await showMessage.ShowErrorMessage(await httpResponse.GetBody());
+        }
+        else
+        {
+            navigationManager.NavigateTo("person");
+        }
+    }
 }

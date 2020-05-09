@@ -1,7 +1,26 @@
 @page "/person/create"
 
-<h3>New person</h3>
+@inject IBaseService baseService
+@inject IShowMessage showMessage
+@inject NavigationManager navigationManager
+
+<h3>Create a new person</h3>
+
+<PersonForm OnValidSubmit="Create" Person="Person" />
 
 @code {
+    private PersonViewModel Person = new PersonViewModel();
 
+    async Task Create()
+    {
+        var httpResponse = await baseService.PostAsync("http://localhost:5000/api/v1/people", Person);
+        if (httpResponse.Error)
+        {
+           await showMessage.ShowErrorMessage(await httpResponse.GetBody());
+        } 
+        else
+        {
+            navigationManager.NavigateTo("/person");
+        }
+    }
 }

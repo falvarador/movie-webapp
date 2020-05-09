@@ -19,11 +19,11 @@
             </div>
         </div>
     }
-    @if (ImagenTemporal != null)
+    @if (TempImage != null)
     {
         <div>
             <div style="margin:10px;">
-                <img src="@ImagenTemporal" style="width: 400px;" />
+                <img src="@TempImage" style="width: 400px;" />
             </div>
         </div>
     }
@@ -32,8 +32,8 @@
 @code {
     
     [Parameter] public string Label { get; set; } = "Imagen";
-    [Parameter] public string ImagenTemporal { get; set; }
-    [Parameter] public EventCallback<string> ImagenSeleccionada { get; set; }
+    [Parameter] public string TempImage { get; set; }
+    [Parameter] public EventCallback<string> SelectedImage { get; set; }
 
     private string imagenBase64;
     ElementReference inputElement;
@@ -47,8 +47,8 @@
                 var bytesImagen = new byte[memoryStream.Length];
                 memoryStream.Read(bytesImagen, 0, (int)memoryStream.Length);
                 imagenBase64 = Convert.ToBase64String(bytesImagen);
-                await ImagenSeleccionada.InvokeAsync(imagenBase64);
-                ImagenTemporal = null;
+                await SelectedImage.InvokeAsync(imagenBase64);
+                TempImage = null;
                 StateHasChanged();
             }
         }

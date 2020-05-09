@@ -1,7 +1,63 @@
-@page "/genrer"
+@page "/gender"
 
-<h3>Genrer</h3>
+@inject IBaseService baseService
+@inject IShowMessage showMessage
+
+<h3>Genders</h3>
+
+<div class="form-group">
+    <a class="btn btn-info" href="/gender/create">Add new gender</a>
+</div>
+
+<GenericList Records="Genders">
+    <CompleteFound>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Name</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var gender in Genders)
+                {
+                    <tr>
+                        <td>
+                            <a href="/gender/update/@gender.Id" class="btn btn-success">Update</a>
+                            <button @onclick="@(() => DeleteGender(gender))" class="btn btn-danger">Delete</button>
+                        </td>
+                        <td>@gender.Name</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </CompleteFound>
+</GenericList>
 
 @code {
+    public List<GenderViewModel> Genders { get; set; }
 
+    protected async override Task OnInitializedAsync()
+    {
+        await LoadGenders();
+    }
+
+    private async Task LoadGenders()
+    {
+        var httpResponse = await baseService.GetAsync<List<GenderViewModel>>("http://localhost:5000/api/v1/genders/");
+        Genders = httpResponse.Response;
+    }
+
+    private async Task DeleteGender(GenderViewModel gender)
+    {
+        var httpResponse = await baseService.DeleteAsync($"http://localhost:5000/api/v1/genders/{gender.Id}");
+        if (httpResponse.Error)
+        {
+           await showMessage.ShowErrorMessage(await httpResponse.GetBody());
+        }
+        else
+        {
+            await LoadGenders();
+        }
+    }
 }
