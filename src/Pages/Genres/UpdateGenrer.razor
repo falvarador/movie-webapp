@@ -21,7 +21,7 @@ else
 
     protected async override Task OnInitializedAsync()
     {
-        var httpResponse = await baseService.GetAsync<GenderViewModel>($"http://localhost:5000/api/v1/genrers/{GenderId}");
+        var httpResponse = await baseService.GetAsync<GenderViewModel>($"http://localhost:5000/api/v1/genders/{GenderId}");
 
         if (httpResponse.Error)
         {
@@ -42,14 +42,14 @@ else
 
     private async Task EditGender()
     {
-        var httpResponse = await baseService.PutAsync("http://localhost:5000/api/v1/genrers", Gender);
+        var httpResponse = await baseService.PutAsync("http://localhost:5000/api/v1/genders", Gender);
         if (httpResponse.Error)
         {
             await showMessage.ShowErrorMessage(await httpResponse.GetBody());
         }
         else
         {
-            navigationManager.NavigateTo("generos");
+            navigationManager.NavigateTo("gender");
         }
     }
 }

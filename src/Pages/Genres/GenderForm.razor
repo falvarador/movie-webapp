@@ -1,17 +1,30 @@
-﻿<EditForm Model="Gender" OnValidSubmit="OnValidSubmit">
-    <DataAnnotationsValidator />
-    <div class="form-group">
-        <label>Nombre:</label>
-        <div>
-            <InputText class="form-control" @bind-Value="@Gender.Name" />
-            <ValidationMessage For="@(() => Gender.Name)" />
+﻿<div class="row">
+    <div class="col-md-6 d-flex align-items-stretch grid-margin">
+        <div class="row flex-grow">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">@Title</h4>
+                        <ValidationSummary class="card-description" />
+                        <EditForm Model="Gender" OnValidSubmit="OnValidSubmit">
+                            <DataAnnotationsValidator />
+                            <div class="form-group">
+                                <label>Name:</label>
+                                <InputText class="form-control" @bind-Value="@Gender.Name" />
+                                <ValidationMessage For="@(() => Gender.Name)" />
+                            </div>
+
+                            <button type="submit" class="btn btn-success mr-2">Submit</button>
+                        </EditForm>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-
-    <button class="btn btn-success" type="submit">Save</button>
-</EditForm>
+</div>
 
 @code {
+    [Parameter] public string Title { get; set; }
     [Parameter] public GenderViewModel Gender { get; set; }
     [Parameter] public EventCallback OnValidSubmit { get; set; }
 }

@@ -3,36 +3,69 @@
 @inject IBaseService baseService
 @inject IShowMessage showMessage
 
-<h3>Genders</h3>
-
-<div class="form-group">
-    <a class="btn btn-info" href="/gender/create">Add new gender</a>
+<!-- Page Title Header Ends-->
+<div class="row">
+    <div class="col-md-12 grid-margin">
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-lg-3 col-md-6">
+                        <div class="d-flex">
+                            <div class="wrapper">
+                                <h3 class="mb-0 font-weight-semibold">Genders</h3>
+                                <h5 class="mb-0 font-weight-medium text-primary">Gender management module</h5>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <a class="btn btn-info btn-fw float-right" href="/gender/create">
+                            <i class="mdi mdi-plus-box"></i>
+                            Add new gender
+                        </a>
+                    </div>                
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-
-<GenericList Records="Genders">
-    <CompleteFound>
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th></th>
-                    <th>Name</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var gender in Genders)
-                {
-                    <tr>
-                        <td>
-                            <a href="/gender/update/@gender.Id" class="btn btn-success">Update</a>
-                            <button @onclick="@(() => DeleteGender(gender))" class="btn btn-danger">Delete</button>
-                        </td>
-                        <td>@gender.Name</td>
-                    </tr>
-                }
-            </tbody>
-        </table>
-    </CompleteFound>
-</GenericList>
+<div class="row">
+    <div class="col-lg-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title" style="text-transform: none">Mostrando 10 de un total de 30 registros</h4>
+                @* <p class="card-description"> Add class <code>.table-striped</code> </p> *@
+                    <GenericList Records="Genders">
+                        <CompleteFound>
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>Name</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var gender in Genders)
+                                    {
+                                        <tr>
+                                            <td>
+                                                <a class="btn btn-icons btn-inverse-warning" href="/gender/update/@gender.Id">
+                                                    <i class="mdi mdi-pencil"></i>
+                                                </a>
+                                                <button type="button" @onclick="@(() => DeleteGender(gender))" class="btn btn-icons btn-inverse-danger">
+                                                    <i class="mdi mdi-delete"></i>
+                                                </button>
+                                            </td>
+                                            <td>@gender.Name</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </CompleteFound>
+                    </GenericList>
+            </div>
+        </div>
+    </div>
+</div>
 
 @code {
     public List<GenderViewModel> Genders { get; set; }

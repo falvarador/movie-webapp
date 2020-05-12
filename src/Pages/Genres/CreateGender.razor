@@ -4,9 +4,7 @@
 @inject IShowMessage showMessage
 @inject NavigationManager navigationManager
 
-<h3>New gender</h3>
-
-<GenderForm OnValidSubmit="Create" Gender="Gender" />
+<GenderForm OnValidSubmit="Create" Title="Create a new gender" Gender="Gender" />
 
 @code {
     private GenderViewModel Gender = new GenderViewModel();
