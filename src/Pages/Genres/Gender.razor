@@ -3,38 +3,74 @@
 @inject IBaseService baseService
 @inject IShowMessage showMessage
 
-<!-- Page Title Header Ends-->
-<div class="row">
-    <div class="col-md-12 grid-margin">
-        <div class="card">
-            <div class="card-body">
-                <div class="row">
-                    <div class="col-lg-3 col-md-6">
-                        <div class="d-flex">
-                            <div class="wrapper">
-                                <h3 class="mb-0 font-weight-semibold">Genders</h3>
-                                <h5 class="mb-0 font-weight-medium text-primary">Gender management module</h5>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-6">
-                        <a class="btn btn-info btn-fw float-right" href="/gender/create">
-                            <i class="mdi mdi-plus-box"></i>
-                            Add new gender
-                        </a>
-                    </div>                
-                </div>
+<section class="after-head d-flex section-text-white position-relative">
+    <div class="d-background" data-image-src="http://via.placeholder.com/1920x1080" data-parallax="scroll"></div>
+    <div class="d-background bg-black-80"></div>
+    <div class="top-block top-inner container">
+        <div class="top-block-content">
+            <h1 class="section-title">Genders</h1>
+            <div class="page-breadcrumbs">
+                <a class="content-link" href="#">Home</a>
+                <span class="text-theme mx-2"><i class="fas fa-chevron-right"></i></span>
+                <span>Genders</span>
             </div>
         </div>
     </div>
-</div>
-<div class="row">
-    <div class="col-lg-12 grid-margin stretch-card">
-        <div class="card">
-            <div class="card-body">
-                <h4 class="card-title" style="text-transform: none">Mostrando 10 de un total de 30 registros</h4>
-                @* <p class="card-description"> Add class <code>.table-striped</code> </p> *@
-                    <GenericList Records="Genders">
+</section>
+<section class="section-long">
+    <div class="container">
+        <div class="grid row">
+            <GenericList Records="Genders">
+                <CompleteFound>
+                    @foreach (var gender in Genders)
+                    {
+                        @* <tr>
+                            <td>
+                                <a class="btn btn-icons btn-inverse-warning" href="/gender/update/@gender.Id">
+                                    <i class="mdi mdi-pencil"></i>
+                                </a>
+                                <button type="button" @onclick="@(() => DeleteGender(gender))" class="btn btn-icons btn-inverse-danger">
+                                    <i class="mdi mdi-delete"></i>
+                                </button>
+                            </td>
+  
+                        </tr> *@
+                        <div class="col-sm-6 col-lg-4">
+                        <div class="gallery-entity">
+                            <div class="entity-preview" data-role="hover-wrap">
+                                <div class="embed-responsive embed-responsive-16by9">
+                                    <img class="embed-responsive-item" src="http://via.placeholder.com/1920x1080" alt="" />
+                                </div>
+                                <div class="d-over bg-black-40 collapse animated faster" data-show-class="fadeIn show" data-hide-class="fadeOut show">
+                                    <div class="entity-view-popup">
+                                        <a class="content-link action-icon-bordered rounded-circle" href="http://via.placeholder.com/1920x1080" data-magnific-popup="image">
+                                            <span class="icon-content"><i class="fas fa-search"></i></span>
+                                        </a>
+                                    </div>
+                                    <h4 class="entity-title">@gender.Name</h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    }
+                </CompleteFound>
+            </GenericList>
+        </div>
+        <div class="section-bottom">
+            <div class="paginator">
+                <a class="paginator-item" href="#"><i class="fas fa-chevron-left"></i></a>
+                <a class="paginator-item" href="#">1</a>
+                <span class="active paginator-item">2</span>
+                <a class="paginator-item" href="#">3</a>
+                <span class="paginator-item">...</span>
+                <a class="paginator-item" href="#">10</a>
+                <a class="paginator-item" href="#"><i class="fas fa-chevron-right"></i></a>
+            </div>
+        </div>
+    </div>
+</section>
+
+@* <GenericList Records="Genders">
                         <CompleteFound>
                             <table class="table table-hover">
                                 <thead>
@@ -61,11 +97,7 @@
                                 </tbody>
                             </table>
                         </CompleteFound>
-                    </GenericList>
-            </div>
-        </div>
-    </div>
-</div>
+                    </GenericList> *@
 
 @code {
     public List<GenderViewModel> Genders { get; set; }
