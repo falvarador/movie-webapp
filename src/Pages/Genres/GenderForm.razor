@@ -8,14 +8,14 @@
                         <h4 class="form-title text-uppercase">@Title
                             <span class="text-theme">Gender</span>
                         </h4>
-                        <ValidationSummary class="form-text" />
                         <EditForm Model="Gender" OnValidSubmit="OnValidSubmit" autocomplete="off">
+                            <ValidationSummary class="form-text" />
                             <DataAnnotationsValidator />
                             <div class="row form-grid">
                                 <div class="col-12">
                                     <div class="input-view-flat input-group">
                                         <InputText class="form-control" @bind-Value="@Gender.Name" name="name" type="text" placeholder="Name" />
-                                        <ValidationMessage For="@(() => Gender.Name)" />
+                                        @* <ValidationMessage For="@(() => Gender.Name)" /> *@
                                     </div>
                                 </div>
                                 <div class="col-12">

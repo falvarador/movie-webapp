@@ -50,35 +50,6 @@
     </div>
 </section>
 
-@* <GenericList Records="Genders">
-                        <CompleteFound>
-                            <table class="table table-hover">
-                                <thead>
-                                    <tr>
-                                        <th></th>
-                                        <th>Name</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach (var gender in Genders)
-                                    {
-                                        <tr>
-                                            <td>
-                                                <a class="btn btn-icons btn-inverse-warning" href="/gender/update/@gender.Id">
-                                                    <i class="mdi mdi-pencil"></i>
-                                                </a>
-                                                <button type="button" @onclick="@(() => DeleteGender(gender))" class="btn btn-icons btn-inverse-danger">
-                                                    <i class="mdi mdi-delete"></i>
-                                                </button>
-                                            </td>
-                                            <td>@gender.Name</td>
-                                        </tr>
-                                    }
-                                </tbody>
-                            </table>
-                        </CompleteFound>
-                    </GenericList> *@
-
 @code {
     public List<GenderViewModel> Genders { get; set; }
 
