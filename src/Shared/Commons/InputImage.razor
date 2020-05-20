@@ -3,14 +3,13 @@
 
 @inject IFileReaderService fileReaderService
 
-
-<div>
+<div class="col-6">
     <label>@Label</label>
-    <div>
+    <div class="input-view-flat input-group">
         <input type="file" @ref="inputElement" @onchange="ImageFileSelected" accept=".jpg,.jpeg,.png" />
     </div>
 </div>
-<div>
+<div class="col-6">
     @if (imagenBase64 != null)
     {
         <div>

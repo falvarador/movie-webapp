@@ -1,0 +1,62 @@
+﻿<section>
+    <div class="gmap-with-map">
+        <div class="gmap" data-lat="-33.878897" data-lng="151.103737"></div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 ml-lg-auto">
+                    <div class="gmap-form bg-white">
+                        <h4 class="form-title text-uppercase">@Title
+                            <span class="text-theme">Actor</span>
+                        </h4>
+                        <EditForm Model="Person" OnValidSubmit="OnValidSubmit" autocomplete="off">
+                            <ValidationSummary class="form-text" />
+                            <DataAnnotationsValidator />
+                            <div class="row form-grid">
+                                <div class="col-12">
+                                    <label>Name</label>
+                                    <div class="input-view-flat input-group">
+                                        <InputText class="form-control" @bind-Value="@Person.Name" type="text" />
+                                        @* <ValidationMessage For="@(() => Person.Name)" /> *@
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <label>Birthdate</label>
+                                    <div class="input-view-flat input-group">
+                                        <InputDate class="form-control" @bind-Value="@Person.Birthdate" type="text" />
+                                        @* <ValidationMessage For="@(() => Person.Birthdate)" /> *@
+                                    </div>
+                                </div>
+                                <InputImage Label="Photo" SelectedImage="selectedImage" TempImage="@tempImage" />
+                                <InputMarkdown @bind-Value="@Person.Biography" For="@(() => Person.Biography)" Label="Biography" />
+                                <div class="col-12">
+                                    <button class="px-5 btn btn-theme" type="submit">Save</button>
+                                </div>
+                            </div>
+                        </EditForm>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@code {
+    [Parameter] public string Title { get; set; }
+    [Parameter] public PersonViewModel Person { get; set; }
+    [Parameter] public EventCallback OnValidSubmit { get; set; }
+    private string tempImage;
+
+    protected override void OnInitialized()
+    {
+        if (!string.IsNullOrWhiteSpace(Person.Photo))
+        {
+            tempImage = Person.Photo;
+            Person.Photo = null;
+        }
+    }
+
+    private void selectedImage(string imageBase64)
+    {
+        Person.Photo = imageBase64;
+    }
+}

@@ -13,8 +13,9 @@
                             <DataAnnotationsValidator />
                             <div class="row form-grid">
                                 <div class="col-12">
+                                    <label>Name</label>
                                     <div class="input-view-flat input-group">
-                                        <InputText class="form-control" @bind-Value="@Gender.Name" name="name" type="text" placeholder="Name" />
+                                        <InputText class="form-control" @bind-Value="@Gender.Name" type="text" />
                                         @* <ValidationMessage For="@(() => Gender.Name)" /> *@
                                     </div>
                                 </div>

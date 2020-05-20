@@ -4,9 +4,9 @@
 @inject IShowMessage showMessage
 @inject NavigationManager navigationManager
 
-<h3>Create a new person</h3>
+<HeaderBreadcrumb Parent="Home" Section="New actor" />
 
-<PersonForm OnValidSubmit="Create" Person="Person" />
+<ActorForm OnValidSubmit="Create" Title="Add new" Person="Person" />
 
 @code {
     private PersonViewModel Person = new PersonViewModel();

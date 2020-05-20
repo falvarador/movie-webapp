@@ -1,0 +1,95 @@
+@page "/person"
+
+@inject IBaseService baseService
+@inject IShowMessage showMessage
+
+<HeaderBreadcrumb Parent="Home" Section="Actors" />
+
+<section class="section-long">
+    <div class="container">
+        <div class="grid row">
+            <GenericList Records="People">
+                <CompleteFound>
+                    @foreach (var person in People)
+                    {
+                        <div class="col-sm-6 col-lg-4">
+                        <div class="gallery-entity">
+                            <div class="entity-preview" data-role="hover-wrap">
+                                <div class="embed-responsive embed-responsive-16by9">
+                                    <img class="embed-responsive-item" src="http://via.placeholder.com/1920x1080" alt="" />
+                                </div>
+                                <div class="d-over bg-black-40 collapse animated faster" data-show-class="fadeIn show" data-hide-class="fadeOut show">
+                                    <div class="entity-view-popup">
+                                        <a class="content-link action-icon-bordered rounded-circle" href="/person/update/@person.Id" data-magnific-popup="image">
+                                            <span class="icon-content"><i class="fas fa-edit"></i></span>
+                                        </a>
+                                        <a class="content-link action-icon-bordered rounded-circle" @onclick="@(() => DeletePerson(person))" data-magnific-popup="image">
+                                            <span class="icon-content"><i class="fas fa-trash-alt"></i></span>
+                                        </a>
+                                    </div>
+                                    <h4 class="entity-title">@person.Name</h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    }
+                </CompleteFound>
+            </GenericList>
+        </div>
+        <div class="section-bottom">
+            <div class="paginator">
+                <a class="paginator-item" href="#"><i class="fas fa-chevron-left"></i></a>
+                <a class="paginator-item" href="#">1</a>
+                <span class="active paginator-item">2</span>
+                <a class="paginator-item" href="#">3</a>
+                <span class="paginator-item">...</span>
+                <a class="paginator-item" href="#">10</a>
+                <a class="paginator-item" href="#"><i class="fas fa-chevron-right"></i></a>
+            </div>
+        </div>
+    </div>
+</section>
+
+@* <Paginacion PaginaActual="paginaActual" PaginaSeleccionada="paginaSeleccionada" PaginasTotales="paginasTotales"></Paginacion> *@
+
+@code {
+    public List<PersonViewModel> People { get; set; } = new List<PersonViewModel>();
+    private int currentPage = 1;
+    @* private int totalPages; *@
+
+    protected async override Task OnInitializedAsync()
+    {
+        await LoadPeople();
+    }
+
+    private async Task selectPage(int page)
+    {
+        currentPage = page;
+        await LoadPeople(page);
+    }
+
+    private async Task LoadPeople(int page = 1)
+    {
+        var httpResponse = await baseService.GetAsync<List<PersonViewModel>>($"http://localhost:5000/api/v1/people"); // ?pagina={page}
+        if (!httpResponse.Error)
+        {
+            People = httpResponse.Response;
+            @* var conteo = httpResponse.HttpResponseMessage.Headers.GetValues("conteo").FirstOrDefault();
+            totalPages = int.Parse(httpResponse.HttpResponseMessage.Headers.GetValues("totalPaginas").FirstOrDefault()); *@
+        }
+    }
+
+    private async Task DeletePerson(PersonViewModel person)
+    {
+        var httpResponse = await baseService.DeleteAsync($"http://localhost:5000/api/v1/people/{person.Id}");
+        if (httpResponse.Error)
+        {
+            await showMessage.ShowErrorMessage(await httpResponse.GetBody());
+        }
+        else
+        {
+            await LoadPeople();
+        }
+
+    }
+}

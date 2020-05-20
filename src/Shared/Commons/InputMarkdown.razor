@@ -4,16 +4,16 @@
 
 @typeparam TValue
 
-<div>
+<div class="col-6">
     <label>@Label</label>
-    <div>
-        <InputTextArea @bind-Value="CurrentValue" />
+    <div class="input-view-flat input-group">
+        <InputTextArea @bind-Value="CurrentValue" class="form-control" style="height: 22em;" />
         <ValidationMessage For="For" />
     </div>
 </div>
-<div>
+<div class="col-6">
     <label>@Label (preview):</label>
-    <div class="markdown-container" style="overflow: auto;">
+    <div class="input-view-flat input-group">
         <ShowMarkdown ContentMarkdown="@CurrentValue"></ShowMarkdown>
     </div>
 </div>

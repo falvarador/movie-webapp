@@ -4,14 +4,15 @@
 @inject IShowMessage showMessage
 @inject NavigationManager navigationManager
 
-<h3>Update person</h3>
+<HeaderBreadcrumb Parent="Home" Section="Update actor" />
+
 @if (Person == null)
 {
     <text>Cargando...</text>
 }
 else
 {
-    <PersonForm Person="Person" OnValidSubmit="EditPerson" />
+    <ActorForm Person="Person" Title="Update existing" OnValidSubmit="EditPerson" />
 }
 
 @code {
